@@ -1,0 +1,85 @@
+{
+  "policies": [
+    {
+      "policy_id": "credit-load-standard",
+      "name": "Standard credit load",
+      "condition": {
+        "total_selected_credits_lte": 15
+      },
+      "effect": "allowed",
+      "advisor_approval_required": false,
+      "message": "A term schedule of 15 credits or fewer is normally allowed."
+    },
+    {
+      "policy_id": "credit-load-overload",
+      "name": "Credit overload approval",
+      "condition": {
+        "total_selected_credits_gt": 15
+      },
+      "effect": "requires_approval",
+      "advisor_approval_required": true,
+      "message": "Schedules above 15 credits require human advisor approval."
+    },
+    {
+      "policy_id": "missing-prerequisite",
+      "name": "Missing prerequisite",
+      "condition": {
+        "selected_course_has_unsatisfied_prerequisite": true
+      },
+      "effect": "blocked_or_requires_approval",
+      "advisor_approval_required": true,
+      "message": "A course with an unsatisfied prerequisite should not be recommended without advisor approval."
+    },
+    {
+      "policy_id": "concurrent-prerequisite-risk",
+      "name": "Concurrent prerequisite risk",
+      "condition": {
+        "prerequisite_currently_in_progress": true
+      },
+      "effect": "warn",
+      "advisor_approval_required": false,
+      "message": "If a prerequisite is still in progress, flag the risk that the student may need to drop the follow-on course if they do not pass."
+    },
+    {
+      "policy_id": "waitlist-risk",
+      "name": "Waitlist course risk",
+      "condition": {
+        "selected_course_capacity_status": "waitlist"
+      },
+      "effect": "warn",
+      "advisor_approval_required": false,
+      "message": "Waitlisted courses should be paired with a backup option."
+    },
+    {
+      "policy_id": "closed-course",
+      "name": "Closed course",
+      "condition": {
+        "selected_course_capacity_status": "closed"
+      },
+      "effect": "blocked",
+      "advisor_approval_required": true,
+      "message": "Closed courses should not be recommended unless an advisor or department grants an exception."
+    },
+    {
+      "policy_id": "technical-course-balance",
+      "name": "Technical course balance",
+      "condition": {
+        "selected_courses_with_tags_any_of": ["core", "algorithms", "systems", "software engineering"],
+        "count_gt": 2
+      },
+      "effect": "warn",
+      "advisor_approval_required": false,
+      "message": "More than two demanding technical courses may create workload risk."
+    },
+    {
+      "policy_id": "academic-standing-restriction",
+      "name": "Academic standing restriction",
+      "condition": {
+        "student_academic_standing_not_in": ["good"]
+      },
+      "effect": "requires_approval",
+      "advisor_approval_required": true,
+      "message": "Students not in good academic standing need advisor approval for course planning changes."
+    }
+  ]
+}

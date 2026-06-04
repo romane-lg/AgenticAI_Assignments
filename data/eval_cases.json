@@ -1,0 +1,158 @@
+{
+  "eval_cases": [
+    {
+      "case_id": "eval_001_missing_prerequisite",
+      "type": "prerequisite_check",
+      "student_id": "S100492",
+      "user_message": "Can I take COMP 250?",
+      "expected_behavior": {
+        "searching_for_course": "COMP 250",
+        "prerequisite_passed": "no",
+        "required_response_contains": [
+          "no",
+          "You need to take the course COMP 202 in order to take the course COMP 250"
+        ],
+        "guardrail": {
+          "name": "BLOCK_MISSING_PREREQUISITE_APPROVAL",
+          "blocked": true
+        }
+      }
+    },
+    {
+      "case_id": "eval_002_prerequisite_passed",
+      "type": "prerequisite_check",
+      "student_id": "S100492",
+      "user_message": "Can I take COMP 202?",
+      "expected_behavior": {
+        "searching_for_course": "COMP 202",
+        "prerequisite_passed": "yes",
+        "required_response_contains": [
+          "yes",
+          "COMP 202"
+        ],
+        "guardrail": {
+          "name": "BLOCK_MISSING_PREREQUISITE_APPROVAL",
+          "blocked": false
+        },
+        "state_update": {
+          "store_approved_course": true,
+          "approved_course_id": "COMP 202"
+        }
+      }
+    },
+    {
+      "case_id": "eval_003_search_200_level_classes",
+      "type": "course_search",
+      "student_id": "S100492",
+      "user_message": "What 200 level classes are available?",
+      "expected_behavior": {
+        "should_search_catalog": true,
+        "required_course_ids": [
+          "COMP 202",
+          "COMP 250",
+          "STAT 230",
+          "ECON 208"
+        ],
+        "state_update": {
+          "store_approved_course": false,
+          "reason": "The student is only asking for information."
+        }
+      }
+    },
+    {
+      "case_id": "eval_004_off_topic_request",
+      "type": "failure_case",
+      "student_id": "S100492",
+      "user_message": "Write me a poem about unicorns.",
+      "expected_behavior": {
+        "should_refuse_or_redirect": true,
+        "required_response_contains": [
+          "Sorry I am a course advising agent, I am unable to fulffil your request"
+        ],
+        "guardrail": {
+          "name": "BLOCK_NON_COURSE_ADVISING_REQUEST",
+          "blocked": true
+        },
+        "state_update": {
+          "store_approved_course": false,
+          "reason": "The request is outside course advising scope."
+        }
+      }
+    },
+    {
+      "case_id": "eval_005_stateful_follow_on_course",
+      "type": "stateful_prerequisite_check",
+      "student_id": "S100492",
+      "precondition": {
+        "approved_course_from_prior_turn": "COMP 202",
+        "source_case_id": "eval_002_prerequisite_passed"
+      },
+      "user_message": "Can I take COMP 250 now?",
+      "expected_behavior": {
+        "searching_for_course": "COMP 250",
+        "prerequisite_passed": "yes",
+        "required_response_contains": [
+          "yes",
+          "COMP 250"
+        ],
+        "guardrail": {
+          "name": "BLOCK_MISSING_PREREQUISITE_APPROVAL",
+          "blocked": false
+        },
+        "state_update": {
+          "store_approved_course": true,
+          "approved_course_id": "COMP 250"
+        }
+      }
+    },
+    {
+      "case_id": "eval_006_credit_overload_needs_advisor",
+      "type": "credit_load_policy_check",
+      "student_id": "S100492",
+      "user_message": "Can I take 18 credits next semester with COMP 250, MATH 133, STAT 230, COMP 202, COMP 101, and ECON 208?",
+      "expected_behavior": {
+        "should_review_credit_load": true,
+        "advisor_approval_required": true,
+        "approval_status": "needs_advisor",
+        "required_response_contains": [
+          "human advisor",
+          "approval"
+        ],
+        "guardrail": {
+          "name": "CREDIT_OVERLOAD_REQUIRES_ADVISOR",
+          "blocked": true
+        },
+        "state_update": {
+          "store_approved_course": false,
+          "reason": "The student is asking about an overload schedule that requires advisor approval."
+        }
+      }
+    },
+    {
+      "case_id": "eval_007_recalculate_credits_left",
+      "type": "credit_progress_recalculation",
+      "student_id": "S100492",
+      "user_message": "If I take COMP 202 next semester, how many credits will I have left to graduate?",
+      "expected_behavior": {
+        "should_calculate_credit_progress": true,
+        "planned_course_ids": [
+          "COMP 202"
+        ],
+        "completed_credits": 12,
+        "planned_credits": 3,
+        "projected_credits": 15,
+        "credits_required_to_graduate": 120,
+        "credits_left_to_graduate": 105,
+        "required_response_contains": [
+          "15",
+          "105",
+          "credits left"
+        ],
+        "state_update": {
+          "store_approved_course": false,
+          "reason": "The student is asking for a credit projection, not course approval."
+        }
+      }
+    }
+  ]
+}

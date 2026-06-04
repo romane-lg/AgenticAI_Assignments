@@ -1,0 +1,100 @@
+{
+  "rules": [
+    {
+      "course_id": "COMP 101",
+      "prerequisites": [],
+      "corequisites": [],
+      "notes": "Open to students with no prior programming course."
+    },
+    {
+      "course_id": "COMP 202",
+      "prerequisites": [
+        {
+          "type": "all_of",
+          "courses": ["COMP 101"]
+        }
+      ],
+      "corequisites": [],
+      "minimum_grade": "C",
+      "notes": "Student must have completed introductory programming."
+    },
+    {
+      "course_id": "COMP 250",
+      "prerequisites": [
+        {
+          "type": "all_of",
+          "courses": ["COMP 202", "MATH 133"]
+        }
+      ],
+      "corequisites": [],
+      "minimum_grade": "C",
+      "notes": "Requires programming maturity and linear algebra."
+    },
+    {
+      "course_id": "COMP 303",
+      "prerequisites": [
+        {
+          "type": "all_of",
+          "courses": ["COMP 202"]
+        }
+      ],
+      "corequisites": [],
+      "minimum_grade": "C",
+      "notes": "Recommended after Data Structures."
+    },
+    {
+      "course_id": "COMP 330",
+      "prerequisites": [
+        {
+          "type": "one_of",
+          "courses": ["COMP 202", "STAT 230"]
+        }
+      ],
+      "corequisites": [],
+      "minimum_grade": "C",
+      "notes": "Can be entered from programming or data background."
+    },
+    {
+      "course_id": "MATH 133",
+      "prerequisites": [],
+      "corequisites": [],
+      "notes": "No course prerequisite."
+    },
+    {
+      "course_id": "MATH 140",
+      "prerequisites": [],
+      "corequisites": [],
+      "notes": "No course prerequisite."
+    },
+    {
+      "course_id": "MATH 141",
+      "prerequisites": [
+        {
+          "type": "all_of",
+          "courses": ["MATH 140"]
+        }
+      ],
+      "corequisites": [],
+      "minimum_grade": "C",
+      "notes": "Continuation of Calculus I."
+    },
+    {
+      "course_id": "STAT 230",
+      "prerequisites": [
+        {
+          "type": "one_of",
+          "courses": ["MATH 140", "MATH 133"]
+        }
+      ],
+      "corequisites": [],
+      "minimum_grade": "C",
+      "notes": "Requires basic university mathematics."
+    },
+    {
+      "course_id": "ECON 208",
+      "prerequisites": [],
+      "corequisites": [],
+      "notes": "Open elective."
+    }
+  ]
+}

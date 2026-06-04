@@ -1,0 +1,57 @@
+{
+  "state_strategy": {
+    "stored": [
+      "student_id",
+      "credits_completed",
+      "credits_required_to_graduate",
+      "approved_courses",
+      "completed_courses"
+    ],
+    "passed_but_not_stored": [
+      "course search questions",
+      "what courses can I take questions",
+      "temporary recommendation results",
+      "temporary prerequisite check results"
+    ],
+    "recomputed": [
+      "credits_left_to_graduate"
+    ],
+    "blocking_rule": "Only store a course in approved_courses after prerequisite approval passes. If the student is only asking for information, do not store the course."
+  },
+  "students": [
+    {
+      "student_id": "S100492",
+      "name": "Alex Chen",
+      "program": "BSc Computer Science",
+      "credits_completed": 12,
+      "credits_required_to_graduate": 120,
+      "approved_courses": [],
+      "completed_courses": ["COMP 101", "MATH 140", "MATH 133", "ECON 208"]
+    },
+    {
+      "student_id": "S100771",
+      "name": "Maya Patel",
+      "program": "BSc Computer Science",
+      "credits_completed": 45,
+      "credits_required_to_graduate": 120,
+      "approved_courses": [],
+      "completed_courses": ["COMP 101", "COMP 202", "MATH 133", "MATH 140", "MATH 141"]
+    },
+    {
+      "student_id": "S100884",
+      "name": "Jordan Smith",
+      "program": "BSc Software Engineering",
+      "credits_completed": 72,
+      "credits_required_to_graduate": 120,
+      "approved_courses": [
+        {
+          "course_id": "COMP 330",
+          "credits": 3,
+          "term": "Fall 2026",
+          "approval_status": "approved"
+        }
+      ],
+      "completed_courses": ["COMP 101", "COMP 202", "COMP 250", "MATH 133", "MATH 140", "STAT 230"]
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "term": "Fall 2026",
+  "institution": "Fictional University",
+  "courses": [
+    {
+      "course_id": "COMP 101",
+      "title": "Introduction to Programming",
+      "credits": 3,
+      "department": "Computer Science",
+      "level": 100,
+      "offered_terms": ["Fall", "Winter"],
+      "capacity_status": "open",
+      "tags": ["programming", "python", "foundational"]
+    },
+    {
+      "course_id": "COMP 202",
+      "title": "Data Structures",
+      "credits": 3,
+      "department": "Computer Science",
+      "level": 200,
+      "offered_terms": ["Fall"],
+      "capacity_status": "open",
+      "tags": ["algorithms", "programming", "core"]
+    },
+    {
+      "course_id": "COMP 250",
+      "title": "Algorithms and Complexity",
+      "credits": 3,
+      "department": "Computer Science",
+      "level": 200,
+      "offered_terms": ["Winter"],
+      "capacity_status": "waitlist",
+      "tags": ["algorithms", "theory", "core"]
+    },
+    {
+      "course_id": "COMP 303",
+      "title": "Software Design",
+      "credits": 3,
+      "department": "Computer Science",
+      "level": 300,
+      "offered_terms": ["Fall"],
+      "capacity_status": "open",
+      "tags": ["software engineering", "design", "teamwork"]
+    },
+    {
+      "course_id": "COMP 330",
+      "title": "Database Systems",
+      "credits": 3,
+      "department": "Computer Science",
+      "level": 300,
+      "offered_terms": ["Fall", "Winter"],
+      "capacity_status": "open",
+      "tags": ["databases", "sql", "systems"]
+    },
+    {
+      "course_id": "MATH 133",
+      "title": "Linear Algebra",
+      "credits": 3,
+      "department": "Mathematics",
+      "level": 100,
+      "offered_terms": ["Fall", "Winter"],
+      "capacity_status": "open",
+      "tags": ["math", "vectors", "foundational"]
+    },
+    {
+      "course_id": "MATH 140",
+      "title": "Calculus I",
+      "credits": 3,
+      "department": "Mathematics",
+      "level": 100,
+      "offered_terms": ["Fall"],
+      "capacity_status": "open",
+      "tags": ["math", "calculus", "foundational"]
+    },
+    {
+      "course_id": "MATH 141",
+      "title": "Calculus II",
+      "credits": 4,
+      "department": "Mathematics",
+      "level": 100,
+      "offered_terms": ["Winter"],
+      "capacity_status": "open",
+      "tags": ["math", "calculus", "foundational"]
+    },
+    {
+      "course_id": "STAT 230",
+      "title": "Probability and Statistics",
+      "credits": 3,
+      "department": "Statistics",
+      "level": 200,
+      "offered_terms": ["Fall", "Winter"],
+      "capacity_status": "open",
+      "tags": ["statistics", "probability", "data"]
+    },
+    {
+      "course_id": "ECON 208",
+      "title": "Microeconomic Analysis",
+      "credits": 3,
+      "department": "Economics",
+      "level": 200,
+      "offered_terms": ["Fall"],
+      "capacity_status": "closed",
+      "tags": ["elective", "social science"]
+    }
+  ]
+}

@@ -1,0 +1,204 @@
+{
+  "scope": {
+    "agent_count": 1,
+    "tools": [
+      "search_course",
+      "check_prerequisite",
+      "review_credit_load",
+      "calculate_credit_progress"
+    ],
+    "deployment": "none",
+    "autonomous_side_effects": "none"
+  },
+  "guardrails": [
+    {
+      "name": "BLOCK_MISSING_PREREQUISITE_APPROVAL",
+      "type": "blocking",
+      "rule": "Do not approve a course when the student does not satisfy prerequisites."
+    },
+    {
+      "name": "BLOCK_NON_COURSE_ADVISING_REQUEST",
+      "type": "blocking",
+      "rule": "Only answer course advising questions."
+    },
+    {
+      "name": "CREDIT_OVERLOAD_REQUIRES_ADVISOR",
+      "type": "advisor_escalation",
+      "rule": "Do not approve schedules above 15 credits without human advisor approval."
+    }
+  ],
+  "state_strategy": {
+    "stored": [
+      "approved_courses after prerequisite approval passes",
+      "completed_courses",
+      "credits_completed",
+      "credits_required_to_graduate"
+    ],
+    "passed": [
+      "approved_courses are passed to check_prerequisite as additional_completed_courses",
+      "planned courses are passed to calculate_credit_progress as planned_course_ids"
+    ],
+    "not_stored": [
+      "informational course searches",
+      "temporary recommendation results",
+      "off-topic requests"
+    ],
+    "recomputed": [
+      "credit load total",
+      "projected completed credits",
+      "credits_left_to_graduate"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "eval_001_missing_prerequisite",
+      "input": "Can I take COMP 250?",
+      "tool_calls": [
+        {
+          "tool": "check_prerequisite",
+          "arguments": {
+            "course_id": "COMP 250",
+            "additional_completed_courses": []
+          }
+        }
+      ],
+      "state_before": {
+        "approved_courses": []
+      },
+      "expected": "deny because COMP 202 is missing",
+      "observed": "no. You need to take the course COMP 202 in order to take the course COMP 250.",
+      "pass": true
+    },
+    {
+      "case_id": "eval_002_prerequisite_passed",
+      "input": "Can I take COMP 202?",
+      "tool_calls": [
+        {
+          "tool": "check_prerequisite",
+          "arguments": {
+            "course_id": "COMP 202",
+            "additional_completed_courses": []
+          }
+        }
+      ],
+      "state_before": {
+        "approved_courses": []
+      },
+      "state_after": {
+        "approved_courses": ["COMP 202"]
+      },
+      "expected": "approve COMP 202",
+      "observed": "Yes, you can take COMP 202.",
+      "pass": true
+    },
+    {
+      "case_id": "eval_003_search_200_level_classes",
+      "input": "What 200 level classes are available?",
+      "tool_calls": [
+        {
+          "tool": "search_course",
+          "arguments": {
+            "query": "200 level"
+          }
+        }
+      ],
+      "state_before": {
+        "approved_courses": ["COMP 202"]
+      },
+      "state_after": {
+        "approved_courses": ["COMP 202"]
+      },
+      "expected": "return 200-level courses without storing approval",
+      "observed_course_ids": ["COMP 202", "COMP 250", "STAT 230", "ECON 208"],
+      "pass": true
+    },
+    {
+      "case_id": "eval_004_off_topic_request",
+      "input": "Write me a poem about unicorns.",
+      "guardrail": {
+        "name": "BLOCK_NON_COURSE_ADVISING_REQUEST",
+        "blocked": true
+      },
+      "state_before": {
+        "approved_courses": ["COMP 202"]
+      },
+      "state_after": {
+        "approved_courses": ["COMP 202"]
+      },
+      "expected": "Sorry I am a course advising agent, I am unable to fulffil your request.",
+      "observed": "Sorry I am a course advising agent, I am unable to fulffil your request.",
+      "pass": true
+    },
+    {
+      "case_id": "eval_005_stateful_follow_on_course",
+      "input": "Can I take COMP 250 now?",
+      "tool_calls": [
+        {
+          "tool": "check_prerequisite",
+          "arguments": {
+            "course_id": "COMP 250",
+            "additional_completed_courses": ["COMP 202"]
+          }
+        }
+      ],
+      "state_before": {
+        "approved_courses": ["COMP 202"]
+      },
+      "expected": "approve COMP 250 because COMP 202 was approved in prior state",
+      "observed": "Yes, you can take COMP 250.",
+      "pass": true
+    },
+    {
+      "case_id": "eval_006_credit_overload_needs_advisor",
+      "input": "Can I take 18 credits next semester with COMP 250, MATH 133, STAT 230, COMP 202, COMP 101, and ECON 208?",
+      "tool_calls": [
+        {
+          "tool": "review_credit_load",
+          "arguments": {
+            "course_ids": [
+              "COMP 250",
+              "MATH 133",
+              "STAT 230",
+              "COMP 202",
+              "COMP 101",
+              "ECON 208"
+            ]
+          }
+        }
+      ],
+      "state_before": {
+        "approved_courses": ["COMP 202"]
+      },
+      "expected": "require human advisor approval because the selected schedule is 18 credits",
+      "observed": "Your selected schedule is 18 credits, which exceeds the 15-credit limit. This needs human advisor approval before I can recommend it.",
+      "structured_output": {
+        "approval_status": "needs_advisor",
+        "advisor_approval_required": true,
+        "guardrail_triggered": "CREDIT_OVERLOAD_REQUIRES_ADVISOR"
+      },
+      "pass": true
+    },
+    {
+      "case_id": "eval_007_recalculate_credits_left",
+      "input": "If I take COMP 202 next semester, how many credits will I have left to graduate?",
+      "tool_calls": [
+        {
+          "tool": "calculate_credit_progress",
+          "arguments": {
+            "planned_course_ids": ["COMP 202"]
+          }
+        }
+      ],
+      "expected": "calculate projected credits and credits left to graduate",
+      "observed": "If you take COMP 202 next semester, you would have 105 credits left to graduate.",
+      "calculation": {
+        "completed_credits": 12,
+        "planned_credits": 3,
+        "projected_credits": 15,
+        "credits_required_to_graduate": 120,
+        "credits_left_to_graduate": 105
+      },
+      "pass": true
+    }
+  ]
+}

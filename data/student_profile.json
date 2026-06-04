@@ -1,0 +1,47 @@
+{
+  "student_id": "S100492",
+  "name": "Alex Chen",
+  "program": "BSc Computer Science",
+  "year": 2,
+  "academic_standing": "good",
+  "gpa": 3.1,
+  "completed_courses": [
+    {
+      "course_id": "COMP 101",
+      "grade": "B+",
+      "credits": 3
+    },
+    {
+      "course_id": "MATH 140",
+      "grade": "B",
+      "credits": 3
+    },
+    {
+      "course_id": "MATH 133",
+      "grade": "C+",
+      "credits": 3
+    },
+    {
+      "course_id": "ECON 208",
+      "grade": "A-",
+      "credits": 3
+    }
+  ],
+  "current_enrollments": [
+    {
+      "course_id": "COMP 202",
+      "status": "enrolled"
+    }
+  ],
+  "interests": ["software engineering", "data", "databases"],
+  "constraints": {
+    "max_credits_preferred": 12,
+    "max_credits_allowed_without_approval": 15,
+    "prefers_no_waitlist": true,
+    "needs_human_approval_for_overload": true
+  },
+  "advising_notes": [
+    "Student wants a balanced schedule with no more than two technical core courses.",
+    "Student is considering a data-oriented path but has not declared a minor."
+  ]
+}
