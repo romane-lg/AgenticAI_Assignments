@@ -1,0 +1,69 @@
+{
+  "problem": "14-day retail inventory replenishment for one product",
+  "state": [
+    "today_inventory",
+    "yesterday_inventory",
+    "day_of_week",
+    "same_day_last_week_inventory"
+  ],
+  "actions": {
+    "0": "order_none",
+    "1": "order_less",
+    "2": "order_more"
+  },
+  "reward": "revenue - purchase cost - holding cost - stockout penalty",
+  "horizon_days": 14,
+  "order_lead_time_days": 1,
+  "demand_noise_range": [
+    -4,
+    4
+  ],
+  "training_episodes": 10000,
+  "q_learning_state_used_for_training": [
+    "today_inventory_bucket",
+    "yesterday_inventory_bucket",
+    "day_of_week",
+    "same_day_last_week_inventory_bucket"
+  ],
+  "results": [
+    {
+      "policy": "random_policy",
+      "episodes": 200,
+      "average_profit": 458.25,
+      "worst_episode_profit": 94.5,
+      "best_episode_profit": 755.0,
+      "average_stockout_units": 32.79,
+      "average_units_sold": 89.38
+    },
+    {
+      "policy": "reorder_point_policy",
+      "episodes": 200,
+      "average_profit": 515.95,
+      "worst_episode_profit": 381.5,
+      "best_episode_profit": 638.0,
+      "average_stockout_units": 27.67,
+      "average_units_sold": 94.5
+    },
+    {
+      "policy": "q_learning_policy",
+      "episodes": 200,
+      "average_profit": 571.92,
+      "worst_episode_profit": 331.5,
+      "best_episode_profit": 758.5,
+      "average_stockout_units": 19.95,
+      "average_units_sold": 102.22
+    }
+  ],
+  "edge_episodes": {
+    "low_start_inventory": {
+      "total_reward": 443.0,
+      "total_stockouts": 38,
+      "total_units_sold": 97
+    },
+    "high_start_inventory": {
+      "total_reward": 661.0,
+      "total_stockouts": 34,
+      "total_units_sold": 107
+    }
+  }
+}
