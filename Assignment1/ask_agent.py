@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 from agents import Agent, Runner
 
-from course_advising_tools import (
+from Assignment1.course_advising_tools import (
     AdvisorResponse,
     calculate_credit_progress,
     check_prerequisite,
