@@ -10,10 +10,16 @@ progress.
 
 Main files:
 
-- `ask_agent.py`
-- `course_advising_tools.py`
-- `data/`
-- `evidence/`
+- `Assignment1/ask_agent.py`
+- `Assignment1/course_advising_tools.py`
+- `Assignment1/data/`
+- `Assignment1/evidence/`
+
+See the full Assignment 1 README here:
+
+```text
+Assignment1/README.md
+```
 
 ## Assignment 2: Inventory Replenishment Q-Learning Agent
 

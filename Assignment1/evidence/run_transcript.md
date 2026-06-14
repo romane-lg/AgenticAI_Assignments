@@ -3,7 +3,7 @@
 Command:
 
 ```bash
-printf 'Can I take COMP 202?\nCan I take COMP 250 now?\nWrite me a poem about unicorns.\nCan I take 18 credits next semester with COMP 250, MATH 133, STAT 230, COMP 202, COMP 101, and ECON 208?\nIf I take COMP 202 next semester, how many credits will I have left to graduate?\nexit\n' | .venv/bin/python ask_agent.py
+printf 'Can I take COMP 202?\nCan I take COMP 250 now?\nWrite me a poem about unicorns.\nCan I take 18 credits next semester with COMP 250, MATH 133, STAT 230, COMP 202, COMP 101, and ECON 208?\nIf I take COMP 202 next semester, how many credits will I have left to graduate?\nexit\n' | .venv/bin/python -m Assignment1.ask_agent
 ```
 
 Output:
